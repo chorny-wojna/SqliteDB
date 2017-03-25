@@ -41,6 +41,23 @@ int main(int argc, char* argv[])
 		fprintf(stderr, "Opened database successfully\n");
 	}
 
+	strcpy(sql, "select max(employee_id) from employees;");
+
+	sqlite3_stmt *pStmt;
+	rc = sqlite3_prepare_v2(db, sql, -1, &pStmt, 0);
+
+	if (rc != SQLITE_OK) {
+		fprintf(stderr, "Failed to prepare statement\n");
+		fprintf(stderr, "Cannot open database: %s\n", sqlite3_errmsg(db));
+		sqlite3_close(db);
+		return 1;
+	}
+
+	rc = sqlite3_step(pStmt);
+	
+	max_id = sqlite3_column_int(pStmt, 0);
+	//printf("%d", max_id);
+
 	while (true)
 	{
 		printf("Main Menu\n");
@@ -158,25 +175,25 @@ int main(int argc, char* argv[])
 				address[256], department[256], position[256], acceptance_date[256];
 
 			printf("First name: ");
-			scanf("%255s", first_name);
+			gets(first_name);
 			printf("Middle name: ");
-			scanf("%255s", middle_name);
+			gets(middle_name);
 			printf("Last name: ");
-			scanf("%255s", last_name);
+			gets(last_name);
 			printf("Birth date: ");
-			scanf("%255s", birth_date);
+			gets(birth_date);
 			printf("Birth city: ");
-			scanf("%255s", birth_city);
+			gets(birth_city);
 			printf("Birth country: ");
-			scanf("%255s", birth_country);
+			gets(birth_country);
 			printf("Address: ");
-			scanf("%255s", address);
+			gets(address);
 			printf("Department: ");
-			scanf("%255s", department);
+			gets(department);
 			printf("Position: ");
-			scanf("%255s", position);
+			gets(position);
 			printf("Acceptance date: ");
-			scanf("%255s", acceptance_date);
+			gets(acceptance_date);
 
 			strcpy(sql, "INSERT INTO EMPLOYEES VALUES (");
 
